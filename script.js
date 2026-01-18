@@ -1,6 +1,6 @@
 // Configuración
 // REEMPLAZA ESTO CON TU URL DE N8N (Producción)
-const N8N_WEBHOOK_URL = 'https://tu-instancia-n8n.com/webhook/mi-clinica-chat';
+const N8N_WEBHOOK_URL = 'https://gomezzbryan1.app.n8n.cloud/webhook/8f427031-1110-4ea3-aef7-5d06ba7d5bce/chat';
 
 function toggleChat() {
     const chatWidget = document.getElementById('chat-widget');
@@ -82,3 +82,4 @@ function removeMessageFromUI(id) {
     const element = document.getElementById(id);
     if (element) element.remove();
 }
+
