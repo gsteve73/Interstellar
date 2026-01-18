@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Salud Digital - Asistente IA</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Clínica Salud Digital</h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h2>Cuidamos de ti con tecnología y corazón</h2>
+            <p>Agenda tu cita o consulta con nuestro asistente virtual inteligente.</p>
+            <button class="btn-primary" onclick="toggleChat()">Hablar con el Agente</button>
+        </div>
+    </section>
+
+    <section id="servicios" class="services">
+        <div class="container">
+            <h3>Nuestros Servicios</h3>
+            <div class="grid">
+                <div class="card">
+                    <i class="fas fa-stethoscope"></i>
+                    <h4>Medicina General</h4>
+                    <p>Atención integral para toda la familia.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-user-md"></i>
+                    <h4>Especialidades</h4>
+                    <p>Cardiología, Pediatría y más.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-flask"></i>
+                    <h4>Laboratorio</h4>
+                    <p>Resultados rápidos y confiables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="chat-widget" class="chat-widget">
+        <div class="chat-header" onclick="toggleChat()">
+            <span>Asistente Virtual</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="chat-body" class="chat-body">
+            <div class="message bot-message">
+                Hola, soy el asistente virtual de la clínica. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="user-input" placeholder="Escribe tu consulta..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
