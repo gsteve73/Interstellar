@@ -4,11 +4,520 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Salud Digital - Asistente IA</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00C9A7;
+            --primary-dark: #00A389;
+            --secondary: #845EC2;
+            --accent: #FF6F91;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text: #2C3E50;
+            --text-light: #7F8C8D;
+            --white: #ffffff;
+            --bg-light: #F8F9FA;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            animation: fadeInUp 1s ease-out;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--secondary);
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease-out 0.4s both;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Services */
+        .services {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .services h3 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 50px 35px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card i {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            width: 380px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-header span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .chat-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .chat-header:hover i {
+            transform: rotate(180deg);
+        }
+
+        .chat-body {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,201,167,0.3);
+        }
+
+        .chat-footer {
+            padding: 15px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            background: var(--white);
+        }
+
+        .chat-footer input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .chat-footer input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,201,167,0.1);
+        }
+
+        .chat-footer button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-footer button:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 5px 15px rgba(0,201,167,0.4);
+        }
+
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0,201,167,0.4);
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(0,201,167,0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(0,201,167,0.6);
+            }
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.15) rotate(90deg);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+            max-width: 60px;
+            align-self: flex-start;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .chat-widget {
+                width: calc(100% - 40px);
+                right: 20px;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <header>
         <div class="container">
             <h1>Clínica Salud Digital</h1>
@@ -25,8 +534,8 @@
     <section id="inicio" class="hero">
         <div class="container">
             <h2>Cuidamos de ti con tecnología y corazón</h2>
-            <p>Agenda tu cita o consulta con nuestro asistente virtual inteligente.</p>
-            <button class="btn-primary" onclick="toggleChat()">Hablar con el Agente</button>
+            <p>Agenda tu cita o consulta con nuestro asistente virtual inteligente</p>
+            <button class="btn-primary" onclick="toggleChat()">Hablar con el Asistente</button>
         </div>
     </section>
 
@@ -37,17 +546,17 @@
                 <div class="card">
                     <i class="fas fa-stethoscope"></i>
                     <h4>Medicina General</h4>
-                    <p>Atención integral para toda la familia.</p>
+                    <p>Atención integral para toda la familia con profesionales altamente calificados.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-user-md"></i>
                     <h4>Especialidades</h4>
-                    <p>Cardiología, Pediatría y más.</p>
+                    <p>Cardiología, Pediatría, Ginecología y más especialidades a tu disposición.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-flask"></i>
                     <h4>Laboratorio</h4>
-                    <p>Resultados rápidos y confiables.</p>
+                    <p>Resultados rápidos y confiables con tecnología de última generación.</p>
                 </div>
             </div>
         </div>
@@ -60,7 +569,7 @@
         </div>
         <div id="chat-body" class="chat-body">
             <div class="message bot-message">
-                Hola, soy el asistente virtual de la clínica. ¿En qué puedo ayudarte hoy?
+                ¡Hola! 👋 Soy el asistente virtual de la clínica. ¿En qué puedo ayudarte hoy?
             </div>
         </div>
         <div class="chat-footer">
@@ -73,8 +582,107 @@
         <i class="fas fa-comment-dots"></i>
     </button>
 
-    <script src="script.js"></script>
+    <script>
+        // ⚠️ IMPORTANTE: Reemplaza con tu URL de n8n
+        const N8N_WEBHOOK_URL = 'https://gomezzbryan1.app.n8n.cloud/webhook/8f427031-1110-4ea3-aef7-5d06ba7d5bce/chat';
+
+        function toggleChat() {
+            const chatWidget = document.getElementById('chat-widget');
+            const isVisible = chatWidget.style.display === 'flex';
+            chatWidget.style.display = isVisible ? 'none' : 'flex';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const message = inputField.value.trim();
+
+            if (message === "") return;
+
+            // Agregar mensaje del usuario
+            addMessageToUI(message, 'user-message');
+            inputField.value = '';
+
+            // Mostrar indicador de escritura
+            const typingId = showTypingIndicator();
+
+            try {
+                console.log('Enviando mensaje a:', N8N_WEBHOOK_URL);
+                console.log('Datos:', { chatInput: message });
+
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        chatInput: message,
+                        message: message,
+                        input: message
+                    })
+                });
+
+                console.log('Estado de respuesta:', response.status);
+
+                removeTypingIndicator(typingId);
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Respuesta recibida:', data);
+
+                // Intentar múltiples formatos de respuesta que n8n podría enviar
+                const botResponse = data.output || 
+                                  data.text || 
+                                  data.response || 
+                                  data.message || 
+                                  data.reply ||
+                                  (typeof data === 'string' ? data : null) ||
+                                  "Recibí tu mensaje. ¿En qué más puedo ayudarte?";
+
+                addMessageToUI(botResponse, 'bot-message');
+
+            } catch (error) {
+                console.error('Error detallado:', error);
+                removeTypingIndicator(typingId);
+                addMessageToUI(
+                    "Lo siento, hubo un problema de conexión. Por favor, intenta nuevamente o contacta al administrador.", 
+                    'bot-message'
+                );
+            }
+        }
+
+        function addMessageToUI(text, className) {
+            const chatBody = document.getElementById('chat-body');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.textContent = text;
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatBody = document.getElementById('chat-body');
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('typing-indicator');
+            typingDiv.id = 'typing-' + Date.now();
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            chatBody.appendChild(typingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            return typingDiv.id;
+        }
+
+        function removeTypingIndicator(id) {
+            const element = document.getElementById(id);
+            if (element) element.remove();
+        }
+    </script>
 </body>
-
 </html>
-
